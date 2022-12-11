@@ -57,6 +57,22 @@ mixin _$UserStore on _UserStoreBase, Store {
     });
   }
 
+  late final _$timeoutAtom =
+      Atom(name: '_UserStoreBase.timeout', context: context);
+
+  @override
+  bool get timeout {
+    _$timeoutAtom.reportRead();
+    return super.timeout;
+  }
+
+  @override
+  set timeout(bool value) {
+    _$timeoutAtom.reportWrite(value, super.timeout, () {
+      super.timeout = value;
+    });
+  }
+
   late final _$getAllFilmsAsyncAction =
       AsyncAction('_UserStoreBase.getAllFilms', context: context);
 
@@ -78,7 +94,8 @@ mixin _$UserStore on _UserStoreBase, Store {
     return '''
 loading: ${loading},
 movieModel: ${movieModel},
-foundedMovies: ${foundedMovies}
+foundedMovies: ${foundedMovies},
+timeout: ${timeout}
     ''';
   }
 }

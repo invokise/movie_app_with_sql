@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app_sql/database/database.dart';
-import 'package:movie_app_sql/user/home_screen/home_screen.dart';
+import 'package:movie_app_sql/stores/user_store.dart';
+import 'package:movie_app_sql/user/user_home_screen/user_home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // final dbService = DatabaseService();
   await DatabaseService.init();
   // await dbService.getAllFilms();
-  runApp(MyApp(databaseService: dbService));
+  runApp(MyApp(
+    userStore: UserStore(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key, required this.databaseService});
-  final DatabaseService databaseService;
+  const MyApp({super.key, required this.userStore});
+  final UserStore userStore;
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +24,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomeScreen(
-        databaseService: databaseService,
+      home: UserHomeScreen(
+        userStore: userStore,
       ),
     );
   }

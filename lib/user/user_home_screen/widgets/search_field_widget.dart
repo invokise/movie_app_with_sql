@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app_sql/database/database.dart';
+import 'package:movie_app_sql/stores/user_store.dart';
 import 'package:movie_app_sql/user/search_result_screen/search_result_screen.dart';
 
 class SearchFieldWidget extends StatefulWidget {
   const SearchFieldWidget({
     Key? key,
-    required this.databaseService,
+    required this.userStore,
   }) : super(key: key);
-  final DatabaseService databaseService;
+  final UserStore userStore;
 
   @override
   State<SearchFieldWidget> createState() => _SearchFieldWidgetState();
@@ -74,12 +74,12 @@ class _SearchFieldWidgetState extends State<SearchFieldWidget> {
                 child: TextButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      widget.databaseService
+                      widget.userStore
                           .searchFilm(textEditingController.text);
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => SearchResultScreen(
-                            databaseService: widget.databaseService,
+                            userStore: widget.userStore,
                           ),
                         ),
                       );
