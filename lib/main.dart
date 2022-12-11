@@ -1,26 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app_sql/database/database.dart';
-import 'package:movie_app_sql/home_screen/home_screen.dart';
+import 'package:movie_app_sql/user/home_screen/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final dbService = DatabaseService();
-  // final connection = await dbService.connectToDB();
-  // await connection.query(
-  //     'INSERT INTO producer (producer_code, first_name, last_name, date_of_birth, gender) VALUES (8, "Charise", "Smith", "female")');
-  await dbService.init();
-  // dbService.connection.query()
-  await dbService.getAllFilms();
-  // final res = await dbService.getAllFilms(connection);
-
-  // for (var row in res) {
-  //   print(row);
-  // }
-  runApp(const MyApp());
+  // final dbService = DatabaseService();
+  await DatabaseService.init();
+  // await dbService.getAllFilms();
+  runApp(MyApp(databaseService: dbService));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required this.databaseService});
+  final DatabaseService databaseService;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +21,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomeScreen(),
+      home: HomeScreen(
+        databaseService: databaseService,
+      ),
     );
   }
 }
